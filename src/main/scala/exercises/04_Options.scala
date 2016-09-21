@@ -56,7 +56,7 @@ object Options {
 	    if (roomState(rooms,i) != "not existing" &&
 	        roomState(rooms,i) != "not available" &&
 	        roomState(rooms,i) != "empty")
-	      z + i
+	      z + roomState(rooms,i).toInt
 	    else
 	      z
 	  }
