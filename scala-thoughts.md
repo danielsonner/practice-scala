@@ -23,3 +23,6 @@ whatnot, so perhaps it will grow on me.  Not particularly from this assignment,
 but from the various things we've done in class I think it's super cool how
 flexible Scala is. While it is a bit weird to have a million ways to say the same
 thing, the flexibility of the language is super cool.
+
+Going forward I'd love to do more functional programming scala style and learn
+more about what kind of things are fun to do functionally in scala.
