@@ -31,14 +31,14 @@ object Collections {
    * 
    */
   def firstElementInList[T](l: List[T]): T = {
-    error("fix me")
+    l.head
   }
 
   /**
    * Get the sum of all the elements in the list, e.g. sumOfList(List(1,2,3)) = 6.
    */
   def sumOfList(l: List[Int]): Int = {
-    error("fix me")
+    l.sum
   }
 
   /**
@@ -51,11 +51,11 @@ object Collections {
    *  - ... etc
    */
   def lastElementInList[T](l: List[T]): T = {
-    error("fix me")
+    l.last
   }
 
    /**
-   * Get the nth element in the list, e.g. nthElementInList(3, List(1,2,3,4)) = 3.
+   * Get the nth element in the list, e.g. nthElementInList(2, List(1,2,3,4)) = 3.
    * 
    * Hint: this can be achieved in multiple ways:
    *  - built in
@@ -65,7 +65,7 @@ object Collections {
    *  - ... etc
    */
   def nthElementInList[T](n: Int, l: List[T]): T = {
-    error("fix me")
+    l(n)
   }
 
   /**
@@ -79,7 +79,7 @@ object Collections {
    *  - ... etc 
    */
   def concatLists[T](l1: List[T], l2: List[T]): List[T] = {
-    error("fix me")
+    l1 ::: l2
   }
 
   /**
@@ -92,7 +92,7 @@ object Collections {
    * 
    */
   def sortList[T <% Ordered[T]](list: List[T]): List[T] = {
-    error("fix me")
+    list.sorted
   }
 
   /**
@@ -103,7 +103,7 @@ object Collections {
    * to implement in your own free-style way.
    */
   def elementExists[T](l: List[T], e: T): Boolean = {
-    error("fix me")
+    l.contains(e)
   }
 
   /**
@@ -114,7 +114,7 @@ object Collections {
    * pattern match or some other method.
    */
   def oddElements(iList: List[Int]): List[Int] = {
-    error("fix me")
+    iList.filter(_ % 2 == 1)
   }
 
   /**
@@ -130,7 +130,10 @@ object Collections {
    * neat way using recursion. 
    */
   def tails[T](l: List[T]): List[List[T]] = {
-    error("fix me")
+    if (l.length == 0)
+      List(List())
+    else
+      l::tails(l.drop(1))
   }
   
   /**
@@ -138,16 +141,21 @@ object Collections {
    * 
    * As usual, various ways exist: pattern matching, folding, ...
    */
-  def maxElementInList(l: List[Int]): Int = {
-    error("fix me")
-  }
+  def maxElementInList(l: List[Int]): Int = 
+    l.fold(0) { (z, i) =>  if (i > z) i else z }
+  
 
   /**
    * Calculate the sum of the equally position elements
    * of the two list
    */
   def sumOfTwo(l1: List[Int], l2: List[Int]): List[Int] = {
-    error("fix me")
+    if (l1.isEmpty)
+      l2
+    else if (l2.isEmpty)
+      l1
+    else
+    (l1, l2).zipped.map(_ + _)
   }
 
   /**
@@ -155,7 +163,7 @@ object Collections {
    * method above
    */
   def sumOfMany(l: List[Int]*): List[Int] = {
-    error("fix me")
+    (l foldLeft List.empty[Int])(sumOfTwo)
   }
 
   case class Person(age: Int, firstName: String, lastName: String)
@@ -165,30 +173,8 @@ object Collections {
    * The idea is to rewrite the method into more functional style. 
    */
   def separateTheYoungFromTheOld(persons: List[Person]): List[List[String]] = {
-    var youngins: ListBuffer[Person] = new ListBuffer[Person]()
-    var elders: ListBuffer[Person] = new ListBuffer[Person]()
-    var validYoungNames: ListBuffer[String] = new ListBuffer[String]()
-    var validOldNames: ListBuffer[String] = new ListBuffer[String]()
-
-    for (person <- persons) {
-        if (person.age < 18) {
-          youngins += person
-        } else {
-          elders += person
-        }
-    }
-
-    var sortedYoung = youngins.toList.sortBy(_.age)
-    var sortedOld = elders.toList.sortBy(_.age)
-
-    for (young <- sortedYoung) {
-      validYoungNames += young.firstName
-    }
-    for (old <- sortedOld) {
-      validOldNames += old.firstName
-    }
-    
-    List(validYoungNames.toList, validOldNames.toList)
+    List(persons.filter(_.age < 18).sortBy(_.age).map(_.firstName)
+        , persons.filter(_.age >= 18).sortBy(_.age).map(_.firstName))
   }
 }
 
